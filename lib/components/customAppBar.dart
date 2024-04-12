@@ -42,7 +42,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       leading: widget.icon != null?Container(
         padding: const EdgeInsets.all(8.0),
         child: Row(
-          children: [
+          children:<Widget> [
             IconButton(
               icon: widget.icon!,
               onPressed: widget.route != null ? (){
@@ -52,9 +52,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
               },
             ),
             if(widget.imagePath == null)
-            CircleAvatar(
-              child: Icon(Icons.person, color: Colors.white, size: 20,),
-              radius: 20,
+            Expanded(
+              child: SizedBox(
+                child: CircleAvatar(
+                  child: widget.imagePath == null ? Icon(Icons.person, color: Colors.white, size: 20,) : null,
+                  backgroundImage: widget.imagePath == null ? null : AssetImage("assets/avatar.jpeg"),
+                  radius: 20,
+                ),
+              ),
             )
           ],
         )

@@ -8,7 +8,8 @@ class CustomAppBar extends StatefulWidget implements  PreferredSizeWidget {
     this.actions, 
     this.route, 
     this.backgroundColor, 
-    this.color
+    this.color,
+    this.imagePath
   });
 
   @override
@@ -20,6 +21,7 @@ class CustomAppBar extends StatefulWidget implements  PreferredSizeWidget {
   final String? route;
   final Color? backgroundColor;
   final Color? color;
+  final String? imagePath;
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
 }
@@ -39,13 +41,22 @@ class _CustomAppBarState extends State<CustomAppBar> {
       centerTitle: widget.icon != null?true:false,
       leading: widget.icon != null?Container(
         padding: const EdgeInsets.all(8.0),
-        child: IconButton(
-          icon:  widget.icon as Widget,
-          onPressed: widget.route != null ? (){
-            Navigator.pushNamed(context, widget.route!);
-          }:() {
-            Navigator.pop(context);
-          },
+        child: Row(
+          children: [
+            IconButton(
+              icon: widget.icon!,
+              onPressed: widget.route != null ? (){
+                Navigator.pushNamed(context, widget.route!);
+              }:() {
+                Navigator.pop(context);
+              },
+            ),
+            if(widget.imagePath == null)
+            CircleAvatar(
+              child: Icon(Icons.person, color: Colors.white, size: 20,),
+              radius: 20,
+            )
+          ],
         )
       ):null,
       actions: widget.actions??[],

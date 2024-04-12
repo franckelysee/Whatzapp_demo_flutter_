@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
           title: "WhatzApp Demo",
           backgroundColor: dark_header_bg,
           color: Colors.white,
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white,size: 18,),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.camera_alt_outlined),

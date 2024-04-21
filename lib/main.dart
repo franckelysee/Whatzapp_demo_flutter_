@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:whatzapp_demo_flutter/components/customAppBar.dart';
+import 'package:whatzapp_demo_flutter/pages/actusPage.dart';
+import 'package:whatzapp_demo_flutter/pages/appelsPage.dart';
+import 'package:whatzapp_demo_flutter/pages/discussionsPage.dart';
+import 'package:whatzapp_demo_flutter/pages/outilsPage.dart';
 
 void main() {
   runApp(const MyApp());
 }
 const dark_header_bg = Color(0xFF202c33);
 const text_primary = Color(0xFFe9edef);
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  final PageController _pageController = new PageController();
+  var  _pageIndex =0;
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'WhatzApp Demo',
@@ -25,7 +37,6 @@ class MyApp extends StatelessWidget {
           title: "WhatzApp Demo",
           backgroundColor: dark_header_bg,
           color: Colors.white,
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white,size: 18,),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.camera_alt_outlined),
@@ -85,27 +96,53 @@ class MyApp extends StatelessWidget {
           ],
         ),
 
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (value) {
+            setState((){
+              _pageIndex = value;
+            });
+          },
 
+          children: <Widget>[
+            DiscussionsPage(),
+            AppelsPage(),
+            ActusPage(),
+            OutilsPage(),
+          ],
+        ),
 
         bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _pageIndex,
           backgroundColor: dark_header_bg,
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
-          items: const <BottomNavigationBarItem>[
+          landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          onTap: (value) {
+            print(value);
+            _pageController.jumpToPage(value);
+          },
+          items:  <BottomNavigationBarItem>[
             BottomNavigationBarItem(
+              tooltip: "Discussions",
               backgroundColor: dark_header_bg,
               icon: Icon(Icons.message),
               label: 'Discussions',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.call),
+              backgroundColor: dark_header_bg,
+              icon: Icon(Icons.call_outlined),
               label: 'Appels',
             ),
             BottomNavigationBarItem(
+              backgroundColor: dark_header_bg,
               icon: Icon(Icons.blur_circular_rounded),
               label: 'Actus',
             ),
             BottomNavigationBarItem(
+              backgroundColor: dark_header_bg,
               icon: Icon(Icons.store_outlined),
               label: 'Outils',
             ),
